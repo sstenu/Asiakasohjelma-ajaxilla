@@ -1,0 +1,6 @@
+
+marrask. 18, 2021 19:00:06.693 NEW SESSION
+marrask. 18, 2021 19:00:06.694 
+marrask. 18, 2021 19:00:06.695 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+marrask. 18, 2021 19:00:06.696 
+marrask. 18, 2021 19:00:06.738 [Parent 16080, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167

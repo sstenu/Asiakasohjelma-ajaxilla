@@ -1,0 +1,13 @@
+@charset "ISO-8859-1";
+
+
+table{
+	background-color: cloud;
+	
+}
+
+th, td {
+	outline-style:solid;
+	text-align: left;
+	padding: 15px;
+}

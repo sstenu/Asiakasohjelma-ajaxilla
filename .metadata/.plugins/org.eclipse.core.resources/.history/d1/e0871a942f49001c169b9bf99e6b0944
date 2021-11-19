@@ -1,0 +1,12 @@
+@charset "ISO-8859-1";
+
+
+table{
+	text-align: center;
+	background-color: ivory;
+	
+}
+
+th, td {
+	outline-style:solid;
+}
