@@ -1,0 +1,12 @@
+@charset "ISO-8859-1";
+
+.oikealle{
+	text-align:right;
+}]
+
+th, td {
+	outline-style:solid;
+	padding: 15px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

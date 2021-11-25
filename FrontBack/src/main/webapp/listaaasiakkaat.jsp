@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link rel="stylesheet" href="tyyli.css">
+<link rel="stylesheet" href="css/tyyli.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>tehtävä4</title>
 </head>
@@ -12,8 +12,11 @@
 <table id="listaus">
 	<thead>
 		<tr>
-			<th>Hakusana:</th>
-			<th><input type="text" id="hakusana"></th>
+			<th colspan="6" class="oikealle"><span id="uusiAsiakas">Lisää asiakas</span></th>
+		</tr>
+		<tr>
+			<th colspan="3">Hakusana:</th>
+			<th colspan="2"><input type="text" id="hakusana"></th>
 			<th><input type="button" value="HAE" id="hakunappi"></th>
 		</tr>
 		<tr>
@@ -22,6 +25,7 @@
 			<th>Sukunimi</th>
 			<th>Puhelin</th>
 			<th>Sposti</th>
+			<th>Poista</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +33,10 @@
 </table>
 <script>
 $(document).ready(function(){
+	
+	$("#uusiAsiakas").click(function(){
+		document.location="lisaaasiakas.jsp";
+	})
 	
 	haeAsiakkaat();
 	
@@ -44,7 +52,8 @@ $(document).ready(function(){
 	
 	$("#hakusana").focus();
 	
-	
+});
+
 function haeAsiakkaat(){	
 	$("#listaus tbody").empty();
 	$.ajax({url:"asiakkaat/"+$("#hakusana").val(), 
@@ -53,12 +62,13 @@ function haeAsiakkaat(){
 		success:function(result){//Funktio palauttaa tiedot json-objektina		
 			$.each(result.asiakkaat, function(i, field){  
 	        	var htmlStr;
-	        	htmlStr+="<tr>";
+	        	htmlStr+="<tr id='rivi_"+field.asiakasID+"'>";
 	        	htmlStr+="<td>"+field.asiakasID+"</td>";
 	        	htmlStr+="<td>"+field.etunimi+"</td>";
 	        	htmlStr+="<td>"+field.sukunimi+"</td>";
 	        	htmlStr+="<td>"+field.puhelin+"</td>";  
 	        	htmlStr+="<td>"+field.sposti+"</td>";
+	        	htmlStr+="<td><span class='poista' onclick=poista('"+field.asiakasID+"')>Poista</span></td>";
 	        	htmlStr+="</tr>";
 	        	$("#listaus tbody").append(htmlStr);
 	        });
@@ -66,7 +76,20 @@ function haeAsiakkaat(){
 	});
 };
 
-})
+function poista(asiakasID){
+	if(confirm("Poista asiakas " + asiakasID + "?")){
+		$.ajax({url:"asiakkaat/"+asiakasID, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
+	        if(result.response==0){
+	        	$("#ilmo").html("Asiakkaan poisto epäonnistui.");
+	        }else if(result.response==1){
+	        	$("#rivi_"+asiakasID).css("background-color", "red"); //Värjätään poistetun asiakkaan rivi
+	        	alert("Asiakkaan " + asiakasID +" poisto onnistui.");
+				haeAsiakkaat();        	
+			}
+	    }});
+	}
+};
+
 </script>
 </body>
 </html>
