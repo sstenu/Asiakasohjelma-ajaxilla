@@ -3,6 +3,9 @@
 .oikealle{
 	text-align:right;
 }
+th{
+	background-color: rgb(225,153,225);
+}
 
 th, td {
 	outline-style:solid;

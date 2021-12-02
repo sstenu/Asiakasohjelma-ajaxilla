@@ -128,5 +128,54 @@ public class Dao {
 		}				
 		return paluuArvo;
 	}
+	
+	public Asiakas etsiAsiakas(String asiakasID) {
+		Asiakas asiakas = null;
+		int etsittava = Integer.parseInt(asiakasID);
+		sql = "SELECT * FROM asiakkaat WHERE asiakas_id=?";       
+		try {
+			con=yhdista();
+			if(con!=null){ 
+				stmtPrep = con.prepareStatement(sql); 
+				stmtPrep.setInt(1, etsittava);
+        		rs = stmtPrep.executeQuery();  
+        		if(rs.isBeforeFirst()){ //jos kysely tuotti dataa, eli rekNo on käytössä
+        			rs.next();
+        			asiakas = new Asiakas();        			
+        			asiakas.setAsiakasID(rs.getInt(1));
+        			asiakas.setEtunimi(rs.getString(2));
+					asiakas.setSukunimi(rs.getString(3));
+					asiakas.setPuhelin(rs.getString(4));	
+					asiakas.setSposti(rs.getString(5));       			      			
+				}        		
+			}	
+			con.close();  
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return asiakas;		
+	}
+	
+	public boolean muutaAsiakas(Asiakas asiakas, Integer vanhaID){
+		boolean paluuArvo=true;
+		sql="UPDATE asiakkaat SET asiakas_id=?, etunimi=?, sukunimi=?, puhelin=?, sposti=? WHERE asiakas_id=?";						  
+		try {
+			con = yhdista();
+			stmtPrep=con.prepareStatement(sql); 
+			stmtPrep.setInt(1, asiakas.getAsiakasID());
+			stmtPrep.setString(2, asiakas.getEtunimi());
+			stmtPrep.setString(3, asiakas.getSukunimi());
+			stmtPrep.setString(4, asiakas.getPuhelin());
+			stmtPrep.setString(5, asiakas.getSposti());
+			stmtPrep.setInt(6, vanhaID);
+			stmtPrep.executeUpdate();
+	        con.close();
+		} catch (Exception e) {				
+			e.printStackTrace();
+			paluuArvo=false;
+		}				
+		return paluuArvo;
+	}
+	
 }
 

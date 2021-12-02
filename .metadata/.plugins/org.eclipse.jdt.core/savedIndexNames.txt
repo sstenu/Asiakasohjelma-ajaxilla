@@ -25,7 +25,6 @@ INDEX VERSION 1.131+C:\Users\stenb\Desktop\Tehtava4\.metadata\.plugins\org.eclip
 2213208631.index
 1755091968.index
 1663153086.index
-3046858761.index
 2555655577.index
 2370566378.index
 456183091.index
